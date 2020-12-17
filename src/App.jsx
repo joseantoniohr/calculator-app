@@ -1,40 +1,61 @@
-import React from 'react'
-
-import Button from './components/Button'
+/* eslint no-eval: 0 */
+import React, { useState } from 'react'
+import words from 'lodash.words'
 import Result from './components/Result'
+import Numbers from './components/Numbers'
+import Functions from './components/Functions'
+import MathOperations from './components/MathOperations'
 
 import './App.css'
 
 const App = () => {
-	console.log("Renderización de la App");
+
+	// Array Destructuring
+	const [stack, setStack] = useState("")
+
+	const items = words(stack, /[^-^+^*^/]+/g)
+	const value = items.length > 0 ? items[items.length-1] : 0
+
+	console.log("Renderización de la App", value);
+
+	const clickHandler = number => {
+		console.log("Button.clickHandler", number)
+		setStack(`${stack}${number}`)
+	}
+
+	const onClickOperation = operation => {
+		console.log("Button.onClickOperation", operation)
+		setStack(`${stack}${operation}`)
+	}
+
+	const onClickEqual = text => {
+		console.log("Button.onClickEqual", text)
+		setStack(eval(stack).toString())
+	}
+
+	const onContentClear = () => {
+		setStack("")
+	}
+
+	const onDelete = () => {
+		if ( stack.length > 0 ) {
+			const newStack = stack.substring(0, stack.length - 1)
+			console.log("Button.onDelete", newStack)
+			setStack(newStack)
+		}
+	}
+
 	return (
 	<main className="react-calculator">
-		<Result value={0} />
-		<div className="numbers">
-			<Button text="1" />
-			<Button text="2" />
-			<button>3</button>
-			<button>4</button>
-			<button>5</button>
-			<button>6</button>
-			<button>7</button>
-			<button>8</button>
-			<button>9</button>
-			<button>0</button>
-		</div>
 
-		<div className="functions">
-			<button>clear</button>
-			<button>r</button>
-		</div>
+		<Result value={value} />
 
-		<div className="math-operations">
-			<button>+</button>
-			<button>-</button>
-			<button>*</button>
-			<button>/</button>
-			<button>=</button>
-		</div>
+		<Numbers onClickNumber={ clickHandler } />
+
+		<Functions onContentClear={ onContentClear } onDelete={ onDelete } />
+
+		<MathOperations onClickOperation={ onClickOperation } onClickEqual={ onClickEqual } />
+		
 	</main>)
 }
 

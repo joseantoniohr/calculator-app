@@ -1,17 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Result = ({ value }) => {  // { value } -> Destructuring, it is equivalent to { value } = props
-
-    console.log("Renderización de Result", value);
-
-    return (
-        <div className="result">
-            <span>{value}</span>
-        </div>
-    )
-
-}
+const Result = ({ value }) => (  // { value } -> Destructuring, it is equivalent to { value } = props
+    <div className="result">
+        <span>{value}</span>
+    </div>
+)
 
 // PropTypes declaration
 Result.propTypes = {
