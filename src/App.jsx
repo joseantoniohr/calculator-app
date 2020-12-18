@@ -16,26 +16,10 @@ const App = () => {
 	const items = words(stack, /[^-^+^*^/]+/g)
 	const value = items.length > 0 ? items[items.length-1] : 0
 
-	console.log("Renderización de la App", value);
-
-	const clickHandler = number => {
-		console.log("Button.clickHandler", number)
-		setStack(`${stack}${number}`)
-	}
-
-	const onClickOperation = operation => {
-		console.log("Button.onClickOperation", operation)
-		setStack(`${stack}${operation}`)
-	}
-
-	const onClickEqual = text => {
-		console.log("Button.onClickEqual", text)
-		setStack(eval(stack).toString())
-	}
-
-	const onContentClear = () => {
-		setStack("")
-	}
+	const clickHandler = number => setStack(`${stack}${number}`)
+	const onClickOperation = operation => setStack(`${stack}${operation}`)
+	const onClickEqual = () => setStack(eval(stack).toString())
+	const onContentClear = () => setStack("")
 
 	const onDelete = () => {
 		if ( stack.length > 0 ) {
